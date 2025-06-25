@@ -17,7 +17,7 @@ def check_signals():
     except Exception as e:
         print(f"Błąd przy wysyłaniu testu: {e}")
 
-    pairs = ['BTCUSDT.P', 'DOGEUSDT.P', 'SOLUSDT.P']
+    pairs = ['BTCUSDT.P', 'DOGEUSDT.P', 'SOLUSDT.P', 'ETHUSDT.P']  # Dodane ETHUSDT.P
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print(f"\nSprawdzanie sygnałów o {current_time}")
     
