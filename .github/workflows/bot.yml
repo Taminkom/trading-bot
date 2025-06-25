@@ -3,7 +3,7 @@ name: Run Trading Bot
 on:
   schedule:
     - cron: '* * * * *'  # Uruchamia się co minutę
-  workflow_dispatch:      # Dodajemy możliwość ręcznego uruchomienia
+  workflow_dispatch:      # Pozwala na ręczne uruchomienie
 
 jobs:
   run-bot:
