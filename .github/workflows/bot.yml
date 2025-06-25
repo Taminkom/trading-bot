@@ -1,17 +1,12 @@
 name: Run Trading Bot
 
 on:
-  schedule:
-    - cron: '*/5 * * * *'  # Uruchamia się co 5 minut
-  workflow_dispatch:      # Pozwala na ręczne uruchomienie
-  push:                  # Uruchamia się przy każdym push
-  pull_request:          # Uruchamia się przy pull requestach
+  workflow_dispatch:      # Tylko ręczne uruchomienie
+  push:                  # I przy push
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     
     steps:
     - uses: actions/checkout@v2
