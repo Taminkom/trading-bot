@@ -28,11 +28,11 @@ def check_signals():
                 current_price = analysis.indicators['close']
                 rsi = analysis.indicators['RSI']
                 
-                if current_price < bb_lower and rsi < 30:
+                if current_price < bb_lower and rsi <= 20:
                     message = f"🟢 Sygnał LONG dla {pair}\nCena: {current_price}\nRSI: {rsi}"
                     bot.send_message(CHAT_ID, message)
                 
-                elif current_price > bb_upper and rsi > 70:
+                elif current_price > bb_upper and rsi >= 80:
                     message = f"🔴 Sygnał SHORT dla {pair}\nCena: {current_price}\nRSI: {rsi}"
                     bot.send_message(CHAT_ID, message)
                 
