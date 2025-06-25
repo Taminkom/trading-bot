@@ -1,13 +1,13 @@
 name: Run Trading Bot
 
 on:
-  workflow_dispatch:      # Tylko ręczne uruchomienie
-  push:                  # I przy push
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
