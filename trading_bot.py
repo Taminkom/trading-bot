@@ -8,22 +8,10 @@ CHAT_ID = '1692203172'
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
-@bot.message_handler(commands=['start'])
-def send_welcome(message):
-    bot.reply_to(message, "👋 Cześć! Bot jest aktywny i sprawdza sygnały dla BTCUSDT.P, DOGEUSDT.P i SOLUSDT.P")
-
 def check_signals():
     pairs = ['BTCUSDT.P', 'DOGEUSDT.P', 'SOLUSDT.P']
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print(f"\nSprawdzanie sygnałów o {current_time}")
-    
-    # Test wysyłania wiadomości
-    try:
-        test_message = "🔄 Bot działa i sprawdza sygnały..."
-        bot.send_message(CHAT_ID, test_message)
-        print("Test wiadomości wysłany pomyślnie")
-    except Exception as e:
-        print(f"Błąd przy wysyłaniu testu: {e}")
     
     for pair in pairs:
         try:
@@ -61,6 +49,5 @@ def check_signals():
 
 if __name__ == "__main__":
     print("Bot started...")
-    bot.polling(none_stop=True)
     check_signals()
     print("Bot finished...")
