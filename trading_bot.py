@@ -46,16 +46,16 @@ def check_signals():
 
 def run_bot():
     print("Bot started...")
-    while True:  # to jest pętla nieskończona
+    while True:
         try:
             current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             print(f"Sprawdzam sygnały... {current_time}")
             check_signals()
             print("Czekam 5 minut...")
-            time.sleep(300)  # czeka 5 minut przed następnym sprawdzeniem
+            time.sleep(300)
         except Exception as e:
             print(f"Główny błąd: {e}")
-            time.sleep(60)  # w przypadku błędu czeka minutę
+            time.sleep(60)
 
 if __name__ == "__main__":
     run_bot()
