@@ -19,7 +19,7 @@ def check_signals():
                 symbol=pair,
                 exchange="MEXC",
                 screener="crypto",
-                interval=Interval.INTERVAL_1_HOUR
+                interval=Interval.INTERVAL_15_MINUTES  # zmienione na 15 minut
             )
             
             analysis = handler.get_analysis()
@@ -28,15 +28,19 @@ def check_signals():
             current_price = analysis.indicators['close']
             rsi = analysis.indicators['RSI']
             
-            print(f"Sprawdzam {pair} - RSI: {rsi}")
+            print(f"Sprawdzam {pair}:")
+            print(f"RSI: {rsi}")
+            print(f"Cena: {current_price}")
+            print(f"Górna wstęga BB: {bb_upper}")
+            print(f"Dolna wstęga BB: {bb_lower}")
             
             if current_price < bb_lower and rsi <= 20:
-                message = f"🟢 Sygnał LONG dla {pair}\nCena: {current_price}\nRSI: {rsi}"
+                message = f"🟢 Sygnał LONG dla {pair}\nCena: {current_price}\nRSI: {rsi}\nDolna wstęga BB: {bb_lower}"
                 bot.send_message(CHAT_ID, message)
                 print(f"Wysłano sygnał LONG dla {pair}")
             
             elif current_price > bb_upper and rsi >= 80:
-                message = f"🔴 Sygnał SHORT dla {pair}\nCena: {current_price}\nRSI: {rsi}"
+                message = f"🔴 Sygnał SHORT dla {pair}\nCena: {current_price}\nRSI: {rsi}\nGórna wstęga BB: {bb_upper}"
                 bot.send_message(CHAT_ID, message)
                 print(f"Wysłano sygnał SHORT dla {pair}")
             
