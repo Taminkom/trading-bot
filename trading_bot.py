@@ -1,8 +1,6 @@
 import telebot
 from tradingview_ta import TA_Handler, Interval
-import time
 import os
-from datetime import datetime
 
 BOT_TOKEN = os.environ['BOT_TOKEN']
 CHAT_ID = '1692203172'
@@ -29,32 +27,16 @@ def check_signals():
                 current_price = analysis.indicators['close']
                 rsi = analysis.indicators['RSI']
                 
-                current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                
                 if current_price < bb_lower and rsi <= 20:
-                    message = f"🟢 Sygnał LONG dla {pair}\nCena: {current_price}\nRSI: {rsi}\nCzas: {current_time}"
+                    message = f"🟢 Sygnał LONG dla {pair}\nCena: {current_price}\nRSI: {rsi}"
                     bot.send_message(CHAT_ID, message)
-                    print(f"Wysłano sygnał LONG dla {pair}")
                 
                 elif current_price > bb_upper and rsi >= 80:
-                    message = f"🔴 Sygnał SHORT dla {pair}\nCena: {current_price}\nRSI: {rsi}\nCzas: {current_time}"
+                    message = f"🔴 Sygnał SHORT dla {pair}\nCena: {current_price}\nRSI: {rsi}"
                     bot.send_message(CHAT_ID, message)
-                    print(f"Wysłano sygnał SHORT dla {pair}")
                 
         except Exception as e:
             print(f"Błąd dla {pair}: {e}")
 
-def run_bot():
-    print("Bot started...")
-    while True:
-        try:
-            current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            print(f"Sprawdzam sygnały... {current_time}")
-            check_signals()
-            time.sleep(300)  # czeka 5 minut
-        except Exception as e:
-            print(f"Główny błąd: {e}")
-            time.sleep(60)  # w przypadku błędu czeka minutę przed ponowną próbą
-
 if __name__ == "__main__":
-    run_bot()
+    check_signals()
