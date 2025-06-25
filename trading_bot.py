@@ -2,6 +2,7 @@ import telebot
 from tradingview_ta import TA_Handler, Interval
 import os
 from datetime import datetime
+import time
 
 BOT_TOKEN = os.environ['BOT_TOKEN']
 CHAT_ID = '1692203172'
@@ -42,5 +43,7 @@ def check_signals():
 
 if __name__ == "__main__":
     print("Bot started...")
-    check_signals()
-    print("Bot finished...")
+    while True:
+        check_signals()
+        print("Czekam 5 minut...")
+        time.sleep(300)  # czeka 5 minut przed następnym sprawdzeniem
