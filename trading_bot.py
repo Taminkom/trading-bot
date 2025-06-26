@@ -9,7 +9,13 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(message, "Cześć tutaj Twój tradingowy BOT, mówi mi T4BB. Sprawdzam sygnały na giełdzie MEXC, dla par BTCUSDT.P, ETHUSDT.P, SOLUSDT.P, DOGEUSDT.P ❤️")
+    if message.text == '/start':  # reaguje tylko na dokładnie /start
+        bot.reply_to(message, "BIP. BIP. Cześć tutaj Twój tradingowy BOT, mówi mi T4BB. Sprawdzam sygnały na giełdzie MEXC, dla par BTCUSDT.P, ETHUSDT.P, SOLUSDT.P, DOGEUSDT.P ❤️")
+
+# Ignoruj wszystkie inne wiadomości
+@bot.message_handler(func=lambda message: True)
+def ignore_all(message):
+    pass
 
 # Słowniki do śledzenia stanu dla każdej pary
 waiting_for_cross_long = {}
@@ -107,4 +113,8 @@ def check_signals():
             print(f"Błąd dla {pair}: {e}")
 
 if __name__ == "__main__":
-    check_signals()
+    try:
+        check_signals()
+        bot.polling(none_stop=True, timeout=60)
+    except Exception as e:
+        print(f"Błąd: {e}")
