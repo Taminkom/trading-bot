@@ -7,11 +7,6 @@ CHAT_ID = '1692203172'
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
-@bot.message_handler(commands=['start'])
-def send_welcome(message):
-    bot.reply_to(message, "👋 Bot jest aktywny! Monitoruję sygnały dla par BTCUSDT.P, DOGEUSDT.P, SOLUSDT.P i ETHUSDT.P")
-    check_signals()  # sprawdź sygnały od razu po komendzie start
-
 def check_signals():
     pairs = ['BTCUSDT.P', 'DOGEUSDT.P', 'SOLUSDT.P', 'ETHUSDT.P']
     
@@ -26,7 +21,6 @@ def check_signals():
         try:
             analysis = handler.get_analysis()
             
-            # Obliczanie odległości od wstęg BB
             bb_upper = analysis.indicators['BB.upper']
             bb_lower = analysis.indicators['BB.lower']
             current_high = analysis.indicators['high']
@@ -35,14 +29,11 @@ def check_signals():
             upperDistance = ((current_high - bb_upper) / bb_upper) * 100 if current_high > bb_upper else 0
             lowerDistance = ((current_low - bb_lower) / bb_lower) * 100 if current_low < bb_lower else 0
             
-            # StochRSI
             k = analysis.indicators['Stoch.K']
             d = analysis.indicators['Stoch.D']
             
-            # Sprawdzanie przecięcia
             cross_condition = abs(k - d) < 0.1
             
-            # Warunki sygnałów
             if lowerDistance <= -0.15 and k <= 20 and d <= 20 and cross_condition:
                 message = f"🟢 Sygnał LONG dla {pair}\nCena: {current_low}\nBB: {lowerDistance:.3f}%\nK: {k:.2f} D: {d:.2f}"
                 bot.send_message(CHAT_ID, message)
@@ -55,8 +46,4 @@ def check_signals():
             print(f"Błąd dla {pair}: {e}")
 
 if __name__ == "__main__":
-    try:
-        check_signals()  # sprawdź sygnały przy starcie
-        bot.polling(timeout=60)  # nasłuchuj komend przez 60 sekund
-    except Exception as e:
-        print(f"Błąd: {e}")
+    check_signals()
