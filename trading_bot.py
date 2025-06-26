@@ -7,11 +7,9 @@ CHAT_ID = '1692203172'
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
-# Wysyłamy wiadomość powitalną przy starcie
-try:
-    bot.send_message(CHAT_ID, "Cześć tutaj Twój tradingowy BOT, mówi mi T4BB. Sprawdzam sygnały na giełdzie MEXC, dla par BTCUSDT.P, ETHUSDT.P, SOLUSDT.P, DOGEUSDT.P ❤️")
-except Exception as e:
-    print(f"Błąd przy wysyłaniu wiadomości powitalnej: {e}")
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.reply_to(message, "Cześć tutaj Twój tradingowy BOT, mówi mi T4BB. Sprawdzam sygnały na giełdzie MEXC, dla par BTCUSDT.P, ETHUSDT.P, SOLUSDT.P, DOGEUSDT.P ❤️")
 
 # Słowniki do śledzenia stanu dla każdej pary
 waiting_for_cross_long = {}
