@@ -7,6 +7,10 @@ CHAT_ID = '1692203172'
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.reply_to(message, "👋 Bot jest aktywny! Monitoruję sygnały dla par BTCUSDT.P, DOGEUSDT.P, SOLUSDT.P i ETHUSDT.P")
+
 def check_signals():
     pairs = ['BTCUSDT.P', 'DOGEUSDT.P', 'SOLUSDT.P', 'ETHUSDT.P']
     
@@ -50,4 +54,5 @@ def check_signals():
             print(f"Błąd dla {pair}: {e}")
 
 if __name__ == "__main__":
+    bot.polling(none_stop=True)  # Dodane polling
     check_signals()
