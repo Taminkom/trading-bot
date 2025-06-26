@@ -10,6 +10,7 @@ bot = telebot.TeleBot(BOT_TOKEN)
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.reply_to(message, "👋 Bot jest aktywny! Monitoruję sygnały dla par BTCUSDT.P, DOGEUSDT.P, SOLUSDT.P i ETHUSDT.P")
+    check_signals()  # sprawdź sygnały od razu po komendzie start
 
 def check_signals():
     pairs = ['BTCUSDT.P', 'DOGEUSDT.P', 'SOLUSDT.P', 'ETHUSDT.P']
@@ -54,5 +55,8 @@ def check_signals():
             print(f"Błąd dla {pair}: {e}")
 
 if __name__ == "__main__":
-    bot.polling(none_stop=True)  # Dodane polling
-    check_signals()
+    try:
+        check_signals()  # sprawdź sygnały przy starcie
+        bot.polling(timeout=60)  # nasłuchuj komend przez 60 sekund
+    except Exception as e:
+        print(f"Błąd: {e}")
